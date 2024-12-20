@@ -1,0 +1,115 @@
+/* Reset dasar */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Container utama */
+.container {
+    max-width: 1400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Judul */
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Tombol Tambah Film */
+.btn-primary {
+    display: inline-block;
+    margin: 10px 0 20px;
+    padding: 12px 25px;
+    background-color: #28a745;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #218838;
+}
+
+/* Daftar Film */
+.film-list {
+    display: flex;
+    flex-direction: column; /* Satu kolom */
+    gap: 20px; /* Jarak antar item */
+    margin-top: 10px;
+}
+
+/* Item Film */
+.film-item {
+    display: flex;
+    align-items: center; /* Semua elemen sejajar vertikal */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 95%; /* Lebar penuh */
+}
+
+.film-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Poster Film */
+.poster {
+    width: 150px; /* Lebar poster */
+    height: 200px; /* Tinggi poster */
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 20px; /* Jarak ke teks */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Informasi Film */
+.info {
+    flex: 1; /* Informasi menyesuaikan sisa ruang */
+}
+
+.info h3 {
+    margin: 0 0 10px;
+    font-size: 1.3rem;
+    color: #333;
+}
+
+.info p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Tombol Hapus */
+.btn-danger {
+    margin-left: 20px; /* Jarak dari teks */
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #bd2130;
+}

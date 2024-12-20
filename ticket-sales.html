@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jumlah Pembelian Tiket</title>
+    <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+<div class="container">
+    <h2>Jumlah Pembelian Tiket</h2>
+    <div id="ticket-info"></div>
+    <button onclick="window.history.back()" class="btn-primary">Kembali</button>
+</div>
+
+<script>
+    // Mendapatkan ID film dari URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieId = urlParams.get('movie_id');
+
+    // cek apa movie_id ada
+    if (!movieId) {
+        alert("Film ID tidak ditemukan!");
+        window.location.href = 'films.html'; 
+    } else {
+        // Ambil data tiket untuk film yang dipilih
+        fetch(`http://172.16.39.101/sistem_movie/api/get_ticket_sales_client.php?movie_id=${movieId}`)
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('ticket-info');
+
+            // Tampilkan data tiket
+            if (data.status === "success") {
+                container.innerHTML = `
+                    <p><strong>Film ID:</strong> ${movieId}</p>
+                    <p><strong>Jumlah Tiket Terjual:</strong> ${data.ticket_count}</p>
+                `;
+            } else {
+                container.innerHTML = `<p>${data.message}</p>`;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan dalam mengambil data tiket.');
+        });
+    }
+</script>
+</body>
+</html>

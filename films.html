@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Film</title>
+    <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+<div class="container">
+    <h2>Daftar Film</h2>
+    <button onclick="location.href='add.html'" class="btn-primary">Tambah Film</button>
+    <div id="movies" class="film-list"></div>
+</div>
+
+<script>
+    //daftar film dari server movie management
+    fetch('http://192.168.18.71/sistem_movie/api/get_movie.php') 
+    .then(response => response.json())
+    .then(data => {
+        const container = document.getElementById('movies');
+        
+        // Pastikan data yang diterima sesuai format
+        if (data.status === "success" && data.movies.length > 0) {
+            data.movies.forEach(movie => {
+                container.innerHTML += `
+                    <div class="film-item">
+                        <img src="uploads/${movie.poster}" alt="${movie.title}" class="poster">
+                        <div class="info">
+                            <h3>${movie.title}</h3>
+                            <p>${movie.description}</p>
+                            <p><strong>Harga:</strong> Rp${parseInt(movie.price).toLocaleString()}</p>
+                            <p><strong>Durasi:</strong> ${movie.duration} menit</p>
+                        </div>
+                        <button onclick="deleteMovie(${movie.id})" class="btn-danger">Hapus</button>
+                        <button onclick="viewTicketSales(${movie.id})" class="btn-info">Jumlah Pembelian Tiket</button>
+                    </div>
+                `;
+            });
+        } else {
+            container.innerHTML = `<p>Tidak ada film tersedia.</p>`;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan dalam mengambil data film.');
+    });
+
+ 
+    function deleteMovie(id) {
+        if (confirm("Apakah Anda yakin ingin menghapus film ini?")) {
+            fetch('http://192.168.18.71/sistem_movie/api/delete_movie.php', {  
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);  
+                if (data.status === "success") {
+                    location.reload();  
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat menghapus film.');
+            });
+        }
+    }
+
+    function viewTicketSales(movieId) {
+        location.href = `ticket-sales.html?movie_id=${movieId}`;
+    }
+</script>
+</body>
+</html>

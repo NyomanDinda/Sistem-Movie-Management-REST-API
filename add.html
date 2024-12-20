@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Film</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Tambah Film Baru</h2>
+            <form id="add-movie-form" enctype="multipart/form-data">
+                <label for="title">Judul Film:</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="release_date">Tanggal Rilis:</label>
+                <input type="date" id="release_date" name="release_date" required>
+
+                <label for="duration">Durasi (menit):</label>
+                <input type="number" id="duration" name="duration" required>
+
+                <label for="price">Harga (Rp):</label>
+                <input type="number" id="price" name="price" required>
+
+                <label for="description">Deskripsi:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+
+                <label for="poster">Pilih Poster:</label>
+                <input type="file" id="poster" name="poster" accept="image/*" required>
+
+                <div class="form-buttons">
+                    <button type="submit" class="button-ijo">Tambah Film</button>
+                    <a href="films.html" class="btn-back">Kembali ke Daftar Film</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('add-movie-form');
+form.addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch('http://192.168.18.71/sistem_movie/api/add_movie.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.status === "success") {
+            alert('Film berhasil ditambahkan!');
+            window.location.href = 'films.html';
+        } else {
+            alert('Gagal menambahkan film: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan dalam pengiriman data.');
+    }
+});
+
+    </script>
+</body>
+</html>
